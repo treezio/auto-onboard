@@ -25,6 +25,11 @@ jobs:
       - name: Checkout repo-b
         uses: actions/checkout@v4
 
+      - name: Install yq
+        run: |
+          curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
       - name: Update notifications.yaml
         run: |
           EMAIL="${{ github.event.inputs.email }}"
@@ -33,24 +38,17 @@ jobs:
 
           echo "Adding $USERNAME to notifications.yaml"
 
-          echo >> notifications/notifications.yaml
-          cat <<EOF >> notifications/notifications.yaml
-          $USERNAME:
-            aliases:
-              - $ALIAS
-            emails:
-              - $EMAIL
-            services:
-              email:
-                to: $EMAIL
-              slack:
-                to: "@$USERNAME"
-          EOF
+          FILE="notifications/notifications.yaml"
 
-      - name: Sort notifications file alphabetically
-        uses: mikefarah/yq@master
-        with:
-          cmd: yq '.users |= with_entries(sort_by(.key))' notifications/notifications.yaml
+          # Add user with correct structure
+          yq eval -i \
+            ".users.\"$USERNAME\".aliases = [\"$ALIAS\"] |
+            .users.\"$USERNAME\".emails = [\"$EMAIL\"] |
+            .users.\"$USERNAME\".services.email.to = \"$EMAIL\" |
+            .users.\"$USERNAME\".services.slack.to = \"@$USERNAME\"" \
+            "$FILE"
+
+          yq 'sort_keys(..) | pick(["users"] + ["services"])' -i $FILE
 
       - name: Create PR
         env:

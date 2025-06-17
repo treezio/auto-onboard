@@ -1,0 +1,11 @@
+users:
+  c.user:
+    emails: [c@x.com]
+  a.user:
+    emails: [a@x.com]
+  b.user:
+    emails: [b@x.com]
+
+services:
+  email:
+    from: bot@x.com

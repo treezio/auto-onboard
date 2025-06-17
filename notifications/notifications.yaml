@@ -1,14 +1,4 @@
 users:
-  foo.bar:
-    aliases:
-      - foobarr
-    emails:
-      - foo.bar@org.com
-    services:
-      email:
-        to: foo.bar@org.com
-      slack:
-        to: "@foo.bar"
   bar.baz:
     aliases:
       - barbazz
@@ -19,9 +9,38 @@ users:
         to: bar.baz@org.com
       slack:
         to: "@bar.baz"
-
+  bohn.doe:
+    aliases:
+      - bohn
+    emails:
+      - bohn.doe@sequra.es
+    services:
+      email:
+        to: bohn.doe@sequra.es
+      slack:
+        to: '@bohn.doe'
+  foo.bar:
+    aliases:
+      - foobarr
+    emails:
+      - foo.bar@org.com
+    services:
+      email:
+        to: foo.bar@org.com
+      slack:
+        to: "@foo.bar"
+  john.doe:
+    aliases:
+      - john
+    emails:
+      - john.doe@sequra.es
+    services:
+      email:
+        to: john.doe@sequra.es
+      slack:
+        to: '@john.doe'
 services:
-  slack:
-    channel: "#foo"
   email:
     from: "wow@org.com"
+  slack:
+    channel: "#foo"
