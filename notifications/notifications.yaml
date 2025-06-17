@@ -31,12 +31,12 @@ users:
         to: "@foo.bar"
   john.doe:
     aliases:
-      - john
+      - johnny
     emails:
-      - john.doe@sequra.es
+      - john.doe@org.com
     services:
       email:
-        to: john.doe@sequra.es
+        to: john.doe@org.com
       slack:
         to: '@john.doe'
 services:
