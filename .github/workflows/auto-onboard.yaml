@@ -58,8 +58,9 @@ jobs:
 
       - name: Create PR
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
+          USERNAME="${{ github.event.inputs.username }}"
           git config user.name "trizbot"
           git config user.email "trizbot@org.com"
           BRANCH="add-$USERNAME-to-notifications"
