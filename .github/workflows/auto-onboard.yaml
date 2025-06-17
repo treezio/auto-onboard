@@ -30,6 +30,12 @@ jobs:
           curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/yq
           chmod +x /usr/local/bin/yq
 
+      - name: Debug vars
+        run: |
+          echo "EMAIL=${{ github.event.inputs.email }}"
+          echo "USERNAME=${{ github.event.inputs.username }}"
+          echo "ALIAS=${{ github.event.inputs.alias }}"
+
       - name: Update notifications.yaml
         run: |
           EMAIL="${{ github.event.inputs.email }}"
