@@ -1,0 +1,70 @@
+name: Enable user notifications
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        required: true
+        type: string
+      username:
+        required: true
+        type: string
+      alias:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo-b
+        uses: actions/checkout@v4
+
+      - name: Update notifications.yaml
+        run: |
+          EMAIL="${{ github.event.inputs.email }}"
+          USERNAME="${{ github.event.inputs.username }}"
+          ALIAS="${{ github.event.inputs.alias }}"
+
+          echo "Adding $USERNAME to notifications.yaml"
+
+          echo >> notifications/notifications.yaml
+          cat <<EOF >> notifications/notifications.yaml
+          $USERNAME:
+            aliases:
+              - $ALIAS
+            emails:
+              - $EMAIL
+            services:
+              email:
+                to: $EMAIL
+              slack:
+                to: "@$USERNAME"
+          EOF
+
+      - name: Sort notifications file alphabetically
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.users |= with_entries(sort_by(.key))' notifications/notifications.yaml
+
+      - name: Create PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "trizbot"
+          git config user.email "trizbot@org.com"
+          BRANCH="add-$USERNAME-to-notifications"
+          git checkout -b "$BRANCH"
+          git add notifications/notifications.yaml
+          git commit -m "Add $USERNAME to notifications"
+          git push origin "$BRANCH"
+
+          gh pr create --title "Add $USERNAME from origin-repo" \
+                       --body "Triggered by origin-repo PR" \
+                       --base main \
+                       --head "$BRANCH"
