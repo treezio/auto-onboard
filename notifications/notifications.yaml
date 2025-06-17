@@ -1,0 +1,27 @@
+users:
+  foo.bar:
+    aliases:
+      - foobarr
+    emails:
+      - foo.bar@org.com
+    services:
+      email:
+        to: foo.bar@org.com
+      slack:
+        to: "@foo.bar"
+  bar.baz:
+    aliases:
+      - barbazz
+    emails:
+      - bar.baz@org.com
+    services:
+      email:
+        to: bar.baz@org.com
+      slack:
+        to: "@bar.baz"
+
+services:
+  slack:
+    channel: "#foo"
+  email:
+    from: "wow@org.com"
