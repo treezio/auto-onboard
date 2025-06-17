@@ -9,36 +9,16 @@ users:
         to: bar.baz@org.com
       slack:
         to: "@bar.baz"
-  bohn.doe:
+  moo.bar:
     aliases:
-      - bohn
+      - moobarr
     emails:
-      - bohn.doe@sequra.es
+      - moo.bar@org.com
     services:
       email:
-        to: bohn.doe@sequra.es
+        to: moo.bar@org.com
       slack:
-        to: '@bohn.doe'
-  foo.bar:
-    aliases:
-      - foobarr
-    emails:
-      - foo.bar@org.com
-    services:
-      email:
-        to: foo.bar@org.com
-      slack:
-        to: "@foo.bar"
-  john.doe:
-    aliases:
-      - john
-    emails:
-      - john.doe@sequra.es
-    services:
-      email:
-        to: john.doe@sequra.es
-      slack:
-        to: '@john.doe'
+        to: "@moo.bar"
 services:
   email:
     from: "wow@org.com"
