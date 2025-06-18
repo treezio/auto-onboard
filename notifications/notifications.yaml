@@ -9,6 +9,16 @@ users:
         to: bar.baz@org.com
       slack:
         to: "@bar.baz"
+  jane.doe:
+    aliases:
+      - janey
+    emails:
+      - jane.doe@org.com
+    services:
+      email:
+        to: jane.doe@org.com
+      slack:
+        to: '@jane.doe'
   moo.bar:
     aliases:
       - moobarr
